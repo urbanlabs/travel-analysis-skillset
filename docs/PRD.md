@@ -2,7 +2,7 @@
 
 ## Vision
 
-Make travel demand modeling expertise accessible to transportation planners through AI-assisted workflows. By encoding domain knowledge as Claude Code skills, practitioners can get reliable, practical guidance on travel modeling topics without searching through scattered documentation, textbooks, and agency reports.
+Make travel demand modeling and analysis expertise accessible through AI-assisted workflows. By encoding domain knowledge as a Claude Code skill with role-aware guidance, practitioners across the transportation profession can get reliable, practical help -- whether they're running a model, building one, studying travel behavior, or reviewing forecasts.
 
 ## Problem Statement
 
@@ -11,72 +11,130 @@ Travel demand modeling knowledge is fragmented across:
 - Agency-specific documentation and training materials
 - Community resources like tfresource.org (comprehensive but hard to navigate quickly)
 - Tribal knowledge held by experienced modelers
+- Research papers behind paywalls or written for narrow academic audiences
 
-Practitioners -- especially those newer to the field or working at smaller agencies -- need quick, reliable guidance grounded in established best practices. AI assistants can help, but only if they have access to accurate, well-structured domain knowledge.
+Different roles need different things from the same body of knowledge. An analyst debugging a convergence problem needs different guidance than a reviewer assessing whether a model's mode shares are reasonable, or a researcher designing a stated preference survey. Today, all of them search the same scattered sources and filter for relevance themselves.
+
+## Target Personas
+
+The skill serves four distinct roles. It should detect or ask which role the user is operating in and tailor its responses accordingly.
+
+### 1. Analyst / Operator
+People who run existing travel demand models, prepare inputs, and interpret outputs.
+
+**Typical questions:**
+- "My gravity model is producing trip lengths that are too short -- what should I check?"
+- "What's a reasonable RMSE target for screenline validation?"
+- "How do I handle external trips in my model?"
+
+**What they need:** Practical troubleshooting, step-by-step procedures, parameter ranges, rules of thumb, and validation targets.
+
+### 2. Developer
+People who build, modify, or extend travel demand models and related tools.
+
+**Typical questions:**
+- "How should I structure a mode choice utility function for a region with BRT?"
+- "What's the best way to implement feedback between assignment and distribution?"
+- "How do I set up an ActivitySim run with custom extensions?"
+
+**What they need:** Technical depth on model mechanics, software platform guidance, coding patterns, and architectural decisions.
+
+### 3. Researcher
+Academics and research staff studying travel behavior, developing new methods, or designing surveys.
+
+**Typical questions:**
+- "What are current best practices for GPS-assisted household travel surveys?"
+- "How do latent class models compare to mixed logit for mode choice estimation?"
+- "What sample size do I need to detect a 5% shift in transit mode share?"
+
+**What they need:** Methodological rigor, statistical guidance, survey design best practices, connections to the research literature, and awareness of emerging approaches.
+
+### 4. Reviewer
+People at FTA, FHWA, state DOTs, MPO boards, or peer review panels who evaluate model results and forecasts.
+
+**Typical questions:**
+- "Are these traffic growth rates reasonable for a suburban corridor?"
+- "What validation checks should I expect to see in a model documentation report?"
+- "How do I assess whether an ABM is producing credible results for an FTA New Starts analysis?"
+
+**What they need:** Reasonableness benchmarks, standard validation criteria, red flags to watch for, regulatory requirements, and guidance on what questions to ask modelers.
 
 ## Design Principles
 
-1. **Reference, don't duplicate**: Point to tfresource.org and other authoritative sources for deep dives. Encode knowledge independently so Claude can reason about it, but don't try to replace existing resources.
-2. **Practitioners first**: Target working transportation planners, not academics. Emphasize practical guidance, common pitfalls, and actionable recommendations.
-3. **Actionable over exhaustive**: Cover what practitioners actually need to know, not every theoretical nuance. A planner should be able to get useful guidance in a single interaction.
+1. **Role-aware responses**: Adapt depth, emphasis, and framing based on the user's role. An analyst gets troubleshooting steps; a reviewer gets evaluation criteria; a researcher gets methodological nuance.
+2. **Reference, don't duplicate**: Point to tfresource.org and other authoritative sources for deep dives. Encode knowledge independently so Claude can reason about it, but don't replace existing resources.
+3. **Practitioners first**: Emphasize practical guidance, common pitfalls, and actionable recommendations over theoretical completeness.
 4. **Living resource**: The skillset should evolve as practices change, new research emerges, and the community contributes.
 
-## Scope
-
-### Phase 1: Fundamentals Skill (`skills/fundamentals/`)
-
-Core travel demand modeling knowledge for practitioners.
-
-**Topics:**
-- **4-Step Model Framework**: Trip generation, trip distribution, mode choice, and traffic assignment. Key methods, inputs/outputs, and practical considerations for each step.
-- **Activity-Based Models**: How ABMs differ from trip-based models, key platforms (ActivitySim, CT-RAMP), when and why to use them, transition considerations.
-- **Data and Surveys**: Key data sources (NHTS, household travel surveys, Census/ACS, LODES, passive/big data), what each provides, quality considerations, and common pitfalls.
-- **Model Validation and Calibration**: Best practices, reasonableness checks, common thresholds, and frequent issues practitioners encounter.
-
-**Success Criteria:**
-- A planner can invoke the skill and get reliable guidance on any of the above topics
-- Responses include references to tfresource.org and other sources for further reading
-- Guidance reflects current best practices in the field
-
-### Phase 2: Research Skill (`skills/research/`)
-
-Key findings from travel forecasting and analysis research, made accessible to practitioners.
-
-**Potential topics:**
-- Important research findings that affect practice
-- Emerging methods and their readiness for application
-- Literature summaries on common modeling questions
-
-### Phase 3: Coding Skill (`skills/coding/`)
-
-Development patterns and tools for travel demand forecasting.
-
-**Potential topics:**
-- Common software platforms and their APIs
-- Scripting patterns for model automation
-- Data processing workflows
-- Open-source tool ecosystem (ActivitySim, TransCAD scripting, EMME, Cube Voyager, etc.)
-
 ## Architecture
+
+### Single Skill, Multiple Personas
+
+Rather than separate skills per role, the project uses one unified skill that adapts its responses based on the user's context. This avoids duplication of foundational knowledge and lets the skill draw connections across roles.
 
 ```
 travel-analysis-skillset/
   skills/
-    fundamentals/SKILL.md    # Phase 1 - domain knowledge skill
-    research/                 # Phase 2 - research findings skill
-    coding/                   # Phase 3 - development skill
+    fundamentals/
+      SKILL.md              # The main skill -- role-aware travel modeling expertise
   docs/
-    PRD.md                    # This document
-    CONTRIBUTING.md           # How to contribute
+    PRD.md                   # This document
+    CONTRIBUTING.md          # How to contribute
   README.md
-  LICENSE                     # CC BY-SA 4.0
+  LICENSE                    # CC BY-SA 4.0
 ```
 
-Each skill is a standalone `SKILL.md` file that can be installed in Claude Code independently.
+### Skill Content Areas
+
+The skill covers these topic areas, with each persona receiving tailored treatment:
+
+| Topic Area | Analyst Focus | Developer Focus | Researcher Focus | Reviewer Focus |
+|-----------|---------------|-----------------|------------------|----------------|
+| 4-Step Models | Running, inputs, outputs, troubleshooting | Implementation, algorithms, feedback loops | Behavioral foundations, estimation methods | Validation criteria, reasonableness checks |
+| Activity-Based Models | Using ABM outputs, interpreting microsimulation | Platform setup, extensions, customization | Activity scheduling theory, model estimation | Assessing ABM credibility, comparison to trip-based |
+| Data & Surveys | Data sources, preparation, quality checks | Data pipelines, APIs, processing tools | Survey design, sampling, statistical methods | Data sufficiency, representativeness |
+| Validation & Calibration | Hitting targets, diagnosing problems | Convergence, algorithm settings | Statistical tests, goodness-of-fit | Standards, benchmarks, red flags |
+| Forecasting | Scenario setup, sensitivity testing | Automation, batch processing | Uncertainty quantification, model transferability | Forecast reasonableness, risk assessment |
+
+## Scope
+
+### Phase 1: Core Skill (Current)
+
+Build the unified skill with foundational coverage of all topic areas. Analyst and reviewer personas are highest priority since they have the most immediate practical need.
+
+**Deliverables:**
+- SKILL.md with role-detection and persona-adapted responses
+- Coverage of 4-step models, ABMs, data/surveys, and validation
+- References to tfresource.org for each major topic
+
+**Success Criteria:**
+- A user can state their role and receive appropriately tailored guidance
+- Responses are accurate and reflect current best practices
+- References point to relevant, accessible resources
+
+### Phase 2: Depth Expansion
+
+Deepen coverage in areas where Phase 1 is thin:
+- Developer: software platform specifics (ActivitySim, EMME, Cube, TransCAD), coding patterns
+- Researcher: survey design, estimation techniques, emerging methods (ML, big data)
+- Reviewer: FTA/FHWA requirements, peer review checklists, forecast accuracy assessment
+
+### Phase 3: Extended Topics
+
+Add coverage for specialized areas:
+- Freight and commercial vehicle modeling
+- Land use / transport integration
+- Pricing and tolling analysis
+- Active transportation modeling
+- Autonomous/connected vehicle modeling
+- Equity analysis in travel modeling
 
 ## Key References
 
-- [tfresource.org](https://tfresource.org) - Travel Forecasting Resource, TRB ADB45 committee
+- [tfresource.org](https://tfresource.org) - Travel Forecasting Resource, TRB ADB45 committee. Source: [github.com/tfresource/tfresource-website](https://github.com/tfresource/tfresource-website)
 - [NHTS](https://nhts.ornl.gov) - National Household Travel Survey
 - [ActivitySim](https://activitysim.github.io) - Open-source activity-based model platform
 - [FHWA Travel Model Improvement Program](https://tmip.org) - Federal resources for travel modeling
+- NCHRP Report 716: Travel Demand Forecasting: Parameters and Techniques
+- FHWA Travel Model Validation and Reasonableness Checking Manual
+- FTA New Starts guidance on travel forecasting
