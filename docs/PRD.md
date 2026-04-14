@@ -104,11 +104,18 @@ travel-analysis-skillset/
 
 The skill covers these topic areas, with each persona receiving tailored treatment:
 
+
 | Topic Area | Analyst Focus | Developer Focus | Researcher Focus | Reviewer Focus |
 |-----------|---------------|-----------------|------------------|----------------|
-| 4-Step Models | Running, inputs, outputs, troubleshooting | Implementation, algorithms, feedback loops | Behavioral foundations, estimation methods | Validation criteria, reasonableness checks |
-| Activity-Based Models | Using ABM outputs, interpreting microsimulation | Platform setup, extensions, customization | Activity scheduling theory, model estimation | Assessing ABM credibility, comparison to trip-based |
-| Data & Surveys | Data sources, preparation, quality checks | Data pipelines, APIs, processing tools | Survey design, sampling, statistical methods | Data sufficiency, representativeness |
+| Terminology and Basic Theories | Learning at the outset if I don't have a background in this area | Reminder of underlying theories. | Learning about theories and terminology for adjacent or related fields | Lookup for when I have a question. |
+| Travel Model Structures | What questions match with which model type and what are associated caveats and decision-making boundaries for the combination of question/model type. | Associated theories with each structure/model type adn what they imply.  What model type to propose/implement for each question. | Behavioral foundations, estimation methods | Decision-making boundaries for each model type based on questions and decision-making contexts. |
+| Strategic Planning Models | - | - | - | - |
+| Network Metric Models (e.g. accessiblity, congestion, reliability) | - | - | - | - |
+| Direct-demand models (e.g. regressions) | - | - | - | - |
+| Aggregate Demand Models (e.g. 4-step models) | - | - | - | - |
+| Microsimulated Demand Models (e.g. Activity-based odels) | - | - | - | - |
+| Network Data and Structures | - | - | - | - |
+| Surveys | Data sources, preparation, quality checks | Data pipelines, APIs, processing tools | Survey design, sampling, statistical methods | Data sufficiency, representativeness |
 | Validation & Calibration | Hitting targets, diagnosing problems | Convergence, algorithm settings | Statistical tests, goodness-of-fit | Standards, benchmarks, red flags |
 | Forecasting | Scenario setup, sensitivity testing | Automation, batch processing | Uncertainty quantification, model transferability | Forecast reasonableness, risk assessment |
 
