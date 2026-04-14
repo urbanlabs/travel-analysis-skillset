@@ -7,10 +7,11 @@ Make travel demand modeling and analysis expertise accessible through AI-assiste
 ## Problem Statement
 
 Travel demand modeling knowledge is fragmented across:
+
 - Academic textbooks (often outdated or overly theoretical)
 - Agency-specific documentation and training materials
 - Community resources like tfresource.org (comprehensive but hard to navigate quickly)
-- Tribal knowledge held by experienced modelers
+- Tacit knowledge held by experienced modelers
 - Research papers behind paywalls or written for narrow academic audiences
 
 Different roles need different things from the same body of knowledge. An analyst debugging a convergence problem needs different guidance than a reviewer assessing whether a model's mode shares are reasonable, or a researcher designing a stated preference survey. Today, all of them search the same scattered sources and filter for relevance themselves.
@@ -20,40 +21,55 @@ Different roles need different things from the same body of knowledge. An analys
 The skill serves four distinct roles. It should detect or ask which role the user is operating in and tailor its responses accordingly.
 
 ### 1. Analyst / Operator
-People who run existing travel demand models, prepare inputs, and interpret outputs.
+
+People who run existing travel demand models, prepare inputs, interpret outputs, and communicate insights to the public and decision-makers and planners.
 
 **Typical questions:**
-- "My gravity model is producing trip lengths that are too short -- what should I check?"
-- "What's a reasonable RMSE target for screenline validation?"
-- "How do I handle external trips in my model?"
+
+- "How should I structure my model networks and manage them using scenarios?"
+- "How do I analyze a project such that I am responding to the obvious uncertainty of the future, but also consistent with FTA and environmental legislation requirements?"
+- "How do I code a managed lane, auxilliary lane, represent transit reliability, etc?"
+- "What tool should i use to answer a question about..."
 
 **What they need:** Practical troubleshooting, step-by-step procedures, parameter ranges, rules of thumb, and validation targets.
 
 ### 2. Developer
-People who build, modify, or extend travel demand models and related tools.
+
+People who build, modify, calibrate, validate or extend travel demand models and related tools.
 
 **Typical questions:**
-- "How should I structure a mode choice utility function for a region with BRT?"
+
+- "How should I structure a mode choice utility function for a region with BRT such that I can reflect the improved reliability and brand marketing that comes with BRT over regular bus service?"
+- "My gravity model is producing trip lengths that are too short -- what should I check?"
+- "What's a reasonable RMSE target for screenline validation? How do I balance base-year validation with future year flexibility/model sensistivity?"
+- "What sensitiviy tests should i use and what are reasonable results?"
 - "What's the best way to implement feedback between assignment and distribution?"
 - "How do I set up an ActivitySim run with custom extensions?"
+- "How do I handle external trips in my model?"
+- "What are current best practices for GPS-assisted household travel surveys?"
+- "What are the most resource-efficient methods for developing a new travel model toolset?"
 
 **What they need:** Technical depth on model mechanics, software platform guidance, coding patterns, and architectural decisions.
 
 ### 3. Researcher
+
 Academics and research staff studying travel behavior, developing new methods, or designing surveys.
 
 **Typical questions:**
-- "What are current best practices for GPS-assisted household travel surveys?"
+
+- "What are some qualitative methods from the field of social sciences that can help improve travel analysis"
 - "How do latent class models compare to mixed logit for mode choice estimation?"
 - "What sample size do I need to detect a 5% shift in transit mode share?"
 
 **What they need:** Methodological rigor, statistical guidance, survey design best practices, connections to the research literature, and awareness of emerging approaches.
 
 ### 4. Reviewer
+
 People at FTA, FHWA, state DOTs, MPO boards, or peer review panels who evaluate model results and forecasts.
 
 **Typical questions:**
-- "Are these traffic growth rates reasonable for a suburban corridor?"
+
+- "Are these results reasonable?"
 - "What validation checks should I expect to see in a model documentation report?"
 - "How do I assess whether an ABM is producing credible results for an FTA New Starts analysis?"
 
@@ -103,11 +119,13 @@ The skill covers these topic areas, with each persona receiving tailored treatme
 Build the unified skill with foundational coverage of all topic areas. Analyst and reviewer personas are highest priority since they have the most immediate practical need.
 
 **Deliverables:**
+
 - SKILL.md with role-detection and persona-adapted responses
 - Coverage of 4-step models, ABMs, data/surveys, and validation
 - References to tfresource.org for each major topic
 
 **Success Criteria:**
+
 - A user can state their role and receive appropriately tailored guidance
 - Responses are accurate and reflect current best practices
 - References point to relevant, accessible resources
@@ -115,6 +133,7 @@ Build the unified skill with foundational coverage of all topic areas. Analyst a
 ### Phase 2: Depth Expansion
 
 Deepen coverage in areas where Phase 1 is thin:
+
 - Developer: software platform specifics (ActivitySim, EMME, Cube, TransCAD), coding patterns
 - Researcher: survey design, estimation techniques, emerging methods (ML, big data)
 - Reviewer: FTA/FHWA requirements, peer review checklists, forecast accuracy assessment
@@ -122,6 +141,7 @@ Deepen coverage in areas where Phase 1 is thin:
 ### Phase 3: Extended Topics
 
 Add coverage for specialized areas:
+
 - Freight and commercial vehicle modeling
 - Land use / transport integration
 - Pricing and tolling analysis
