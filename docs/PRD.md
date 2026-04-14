@@ -123,13 +123,12 @@ The skill covers these topic areas, with each persona receiving tailored treatme
 
 ### Phase 1: Core Skill (Current)
 
-Build the unified skill with foundational coverage of all topic areas. Analyst and reviewer personas are highest priority since they have the most immediate practical need.
+Build the unified skill with foundational coverage of all topic areas from tfresource.org. Analyst and reviewer personas are highest priority since they have the most immediate practical need.
 
 **Deliverables:**
 
 - SKILL.md with role-detection and persona-adapted responses
-- Coverage of 4-step models, ABMs, data/surveys, and validation
-- References to tfresource.org for each major topic
+- Structured repo of knowledge which SKILL.md can/should point to
 
 **Success Criteria:**
 
@@ -139,11 +138,8 @@ Build the unified skill with foundational coverage of all topic areas. Analyst a
 
 ### Phase 2: Depth Expansion
 
-Deepen coverage in areas where Phase 1 is thin:
-
-- Developer: software platform specifics (ActivitySim, EMME, Cube, TransCAD), coding patterns
-- Researcher: survey design, estimation techniques, emerging methods (ML, big data)
-- Reviewer: FTA/FHWA requirements, peer review checklists, forecast accuracy assessment
+- Deepen coverage in areas where Phase 1 is thin and from other sources.
+- Refine Behavior when there are multiple conflicting or differing points of view in the field.
 
 ### Phase 3: Extended Topics
 

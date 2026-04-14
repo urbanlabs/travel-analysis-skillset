@@ -1,0 +1,25 @@
+# Template for a new entry in knowledge/sources.yaml.
+# Copy this block into the `sources:` list in sources.yaml and fill in.
+
+- id: kebab-case-identifier
+  title: Full title
+  url: https://...
+  source_repo: https://...           # optional
+  publisher: Publishing organization
+  authors: []                         # optional list
+  year: null                          # optional integer
+  doi: null                           # optional, academic works
+  license: spdx-or-descriptor         # e.g. cc-by-4.0, us-gov-public-domain,
+                                      # all-rights-reserved, proprietary-unclear
+  redistribution_allowed: false       # true only for explicit open licenses
+  storage_policy: cite-and-summarize  # cite-only | cite-and-summarize |
+                                      # paraphrase-and-cite | quote-fair-use |
+                                      # redistribute-ok
+  format: pdf                         # markdown | html | pdf | rst | csv | other
+  last_fetched: null                  # YYYY-MM-DD
+  verification_status: needs-check    # authoritative | verified | needs-check | disputed
+  tier: 2                             # 1=authoritative, 2=established, 3=emerging
+  caveats: |
+    Any license caveats, mixed-license concerns, contractor attributions, etc.
+  notes: |
+    Context on why this source matters and how it should be used.

@@ -1,0 +1,143 @@
+# Master source manifest for travel-analysis-skillset knowledge base.
+#
+# Every knowledge note MUST cite sources by `id` from this file.
+# Every source MUST have a `storage_policy` that governs how its content
+# may be stored or reproduced in this repository.
+#
+# See docs/LICENSE-COMPLIANCE.md for definitions and enforcement rules.
+#
+# Field reference:
+#   id:                     short kebab-case identifier (stable — used in citations)
+#   title:                  full title
+#   url:                    canonical URL
+#   source_repo:            (optional) upstream repo if source is version-controlled
+#   publisher:              who publishes it
+#   authors:                (optional) list of authors/editors
+#   year:                   (optional) publication year
+#   doi:                    (optional) DOI for academic works
+#   license:                SPDX-ish identifier or descriptor
+#   redistribution_allowed: true | false
+#   storage_policy:         cite-only | cite-and-summarize |
+#                           paraphrase-and-cite | quote-fair-use | redistribute-ok
+#   format:                 markdown | html | pdf | rst | csv | other
+#   last_fetched:           YYYY-MM-DD (updated when content is re-read)
+#   verification_status:    authoritative | verified | needs-check | disputed
+#   tier:                   1 (authoritative) | 2 (established) | 3 (emerging/individual)
+#   caveats:                (optional) any license or usage caveats
+#   notes:                  (optional) free-form notes
+
+sources:
+
+  - id: tfresource
+    title: Travel Forecasting Resource
+    url: https://tfresource.org
+    source_repo: https://github.com/tfresource/tfresource-website
+    publisher: TRB Standing Committee on Transportation Demand Forecasting (ADB45) / National Academy of Sciences
+    license: proprietary-unclear
+    redistribution_allowed: false
+    storage_policy: cite-and-summarize
+    format: markdown
+    last_fetched: 2026-04-14
+    verification_status: authoritative
+    tier: 1
+    caveats: |
+      Site footer claims "Copyright © 2020 National Academy of Sciences". No explicit
+      open license found. Many pages embed material from NCHRP/TCRP reports with their
+      own copyright notices. Treat all content as restricted: link to pages, paraphrase
+      claims, never copy text verbatim beyond short fair-use quotations.
+    notes: |
+      Development discontinued Fall 2024 but remains the most comprehensive community
+      reference for travel forecasting practice.
+
+  - id: nchrp-716
+    title: "NCHRP Report 716: Travel Demand Forecasting: Parameters and Techniques"
+    url: https://www.trb.org/Publications/Blurbs/167055.aspx
+    publisher: Transportation Research Board / National Academies of Sciences, Engineering, and Medicine
+    year: 2012
+    license: all-rights-reserved
+    redistribution_allowed: false
+    storage_policy: cite-only
+    format: pdf
+    last_fetched: null
+    verification_status: authoritative
+    tier: 1
+    caveats: |
+      Permission required for reuse (contact jweeks@nas.edu). Do not store source text.
+      Summaries must be in our own words and cite specific sections/pages.
+
+  - id: fhwa-tmv-manual
+    title: Travel Model Validation and Reasonableness Checking Manual (2nd ed.)
+    url: https://www.fhwa.dot.gov/planning/tmip/publications/other_reports/validation_and_reasonableness_2010/
+    publisher: Federal Highway Administration (TMIP)
+    year: 2010
+    license: us-gov-public-domain
+    redistribution_allowed: true
+    storage_policy: paraphrase-and-cite
+    format: pdf
+    last_fetched: null
+    verification_status: authoritative
+    tier: 1
+    caveats: |
+      Produced by Cambridge Systematics under FHWA contract. Text is public domain
+      but some figures/tables may retain contractor copyright — verify before copying
+      figures. Safe to paraphrase and quote freely with citation.
+
+  - id: fta-new-starts
+    title: FTA Capital Investment Grants (New Starts) Program — Travel Forecasting Guidance
+    url: https://www.transit.dot.gov/CIG
+    publisher: Federal Transit Administration
+    license: us-gov-public-domain
+    redistribution_allowed: true
+    storage_policy: paraphrase-and-cite
+    format: pdf
+    last_fetched: null
+    verification_status: authoritative
+    tier: 1
+    notes: Multiple guidance documents; cite the specific one and its year when used.
+
+  - id: nhts
+    title: National Household Travel Survey
+    url: https://nhts.ornl.gov
+    publisher: Federal Highway Administration / Oak Ridge National Laboratory
+    license: us-gov-public-domain
+    redistribution_allowed: true
+    storage_policy: paraphrase-and-cite
+    format: csv
+    last_fetched: null
+    verification_status: authoritative
+    tier: 1
+    caveats: |
+      No explicit license statement located; treated as public domain as a
+      US-government-sponsored dataset. Confirm terms before bulk redistribution of data.
+
+  - id: activitysim-docs
+    title: ActivitySim Documentation
+    url: https://activitysim.github.io/activitysim/
+    source_repo: https://github.com/ActivitySim/activitysim
+    publisher: ActivitySim Consortium (Zephyr Foundation)
+    license: bsd-3-clause-code-docs-unclear
+    redistribution_allowed: false
+    storage_policy: cite-and-summarize
+    format: rst
+    last_fetched: null
+    verification_status: authoritative
+    tier: 1
+    caveats: |
+      Code is BSD-3-Clause. Documentation license not explicitly stated in the repo —
+      default to cite-and-summarize until confirmed. Safe to link, describe, and
+      paraphrase; do not copy long passages.
+
+  - id: tmip
+    title: FHWA Travel Model Improvement Program (TMIP)
+    url: https://tmip.org
+    publisher: Federal Highway Administration
+    license: us-gov-public-domain
+    redistribution_allowed: true
+    storage_policy: paraphrase-and-cite
+    format: html
+    last_fetched: null
+    verification_status: authoritative
+    tier: 1
+    notes: Portal hosting many FHWA-sponsored travel modeling publications.
+
+  # --- Add additional sources below using knowledge/_templates/source-entry.yaml ---
