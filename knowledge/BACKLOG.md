@@ -19,6 +19,12 @@ file is maintained.
 
 **Last regenerated:** 2026-04-14 from tfresource.org topic index.
 
+**Legacy starting material:** `knowledge/_unverified/legacy-skill-content.md`
+contains the pre-pipeline body of `SKILL.md` (pre-2026-04-14). It is NOT
+approved knowledge. Drafters working P1 topics may use it as a starting
+draft but must verify every claim against tier-1 sources before the new
+topic note can reach `status: approved`.
+
 ---
 
 ## Pilot (next up)

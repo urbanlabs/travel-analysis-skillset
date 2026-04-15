@@ -10,6 +10,22 @@ into the skill.
 - **Drafter** (typically Claude or another AI assistant acting on behalf of
   the maintainer): reads sources, drafts knowledge notes, runs self-checks.
 
+## Skill vs. Knowledge — Division of Responsibility
+
+Two different kinds of files, two different jobs:
+
+| | `skills/fundamentals/SKILL.md` | `knowledge/topics/**/*.md` |
+|---|---|---|
+| **Purpose** | Tells Claude *how* to help | Tells Claude *what* is true |
+| **Contents** | Role detection, topic routing, guardrails, response protocol | Concepts, claims with citations, parameter values, benchmarks |
+| **Size** | Lean (tens of lines) — loaded every time the skill triggers | As long as the topic needs — loaded on demand |
+| **Sourced?** | No — instructions, not claims | Yes — every claim cites `sources.yaml` |
+| **Changes** | Rarely | Grows and refines as topics are ingested |
+
+Embedding domain knowledge directly in `SKILL.md` would balloon the context
+footprint and bypass source-verification. The skill should be a dispatcher
+that reads the right knowledge note on demand.
+
 ## Storage Model
 
 The pipeline produces three kinds of artifacts, all version-controlled:
@@ -24,6 +40,11 @@ The pipeline produces three kinds of artifacts, all version-controlled:
    handle them.
 
 All three use templates in `knowledge/_templates/`.
+
+A fourth, transitional directory — `knowledge/_unverified/` — holds
+pre-pipeline content that hasn't been sourced yet. It is NOT part of the
+approved knowledge base; see its README for rules. Content there is a
+starting point for drafters, not a citable reference.
 
 ## End-to-End Workflow
 
