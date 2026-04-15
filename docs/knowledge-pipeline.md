@@ -150,6 +150,78 @@ New personas require a PRD update first. New topic areas can be added by
 creating a new subdirectory under `knowledge/topics/` and updating
 `BACKLOG.md`.
 
+## Topic Hierarchy Rules
+
+Topics nest. "Value of Time" is a sub-topic of "Utility Functions," which
+is a sub-topic of "Econometric Choice Models." Nesting lets each note stay
+small (bounded context footprint) while preserving the relationships
+practitioners care about.
+
+### Top-level areas
+
+The top-level areas come from the PRD's "Skill Content Areas" table and
+map 1:1 to subdirectories of `knowledge/topics/`:
+
+- `terminology/` — Terminology and Basic Theories
+- `model-structures/` — Travel Model Structures (and its subareas)
+- `networks/` — Network Data and Structures
+- `surveys/` — Surveys
+- `validation/` — Validation & Calibration
+- `forecasting/` — Forecasting
+- `extended/` — Phase 3 extended topics (freight, land-use, AVs, equity, etc.)
+
+Adding a new top-level area requires a PRD update.
+
+### When to use a subdirectory vs. flat files
+
+**Hybrid rule**: create a subdirectory inside a topic area when a topic has
+4+ direct children. Otherwise keep files flat within the area.
+
+Example — `model-structures/` uses subdirs for branches with many children:
+
+```
+knowledge/topics/model-structures/
+  overview.md                       # umbrella note for the area
+  strategic-planning.md             # flat — no children
+  network-metric-models.md          # flat — few children
+  direct-demand-models.md           # flat
+  aggregate-demand/                 # subdir — 4-step has 4+ children
+    overview.md                     # 4-step umbrella
+    trip-generation.md
+    trip-distribution.md
+    mode-choice.md
+    traffic-assignment.md
+  microsimulated-demand/            # subdir — ABM has several components
+    overview.md
+    components.md
+    ...
+```
+
+### Frontmatter rules for hierarchy
+
+Every topic note declares its place in the hierarchy via frontmatter:
+
+- `topic_area` — the top-level PRD area (required, one of the keys above)
+- `parent` — the id of the parent topic, or `null` if this note is
+  top-level within its area
+- `subtopics` — optional list of direct child topic ids; used for
+  generating "Subtopics" sections
+
+A topic's `parent` must either be `null` or resolve to another approved
+(or in-review) topic note in the same `topic_area`.
+
+### Size guidance
+
+If a topic note grows beyond ~200 lines, consider splitting. Signs it
+should be split:
+
+- Multiple distinct sub-concepts, each with its own set of claims
+- Persona sections that effectively describe different topics
+- A reader only needs one subsection to answer most questions
+
+Split by creating child topic notes, moving the detail there, and leaving
+the parent with a concise summary plus the `subtopics` list.
+
 ## Workflow: Maintaining the Backlog
 
 `knowledge/BACKLOG.md` is the list of topics queued for ingestion. It is NOT

@@ -92,6 +92,7 @@ def test_unknown_source_id_fails(fake_repo):
         title: Bad Note
         id: bad
         topic_area: model-structures
+        parent: null
         personas: [analyst]
         sources: [does-not-exist]
         last_verified: 2026-04-14
@@ -111,6 +112,7 @@ def test_long_quote_from_restricted_source_fails(fake_repo):
         title: Bad Note
         id: bad
         topic_area: model-structures
+        parent: null
         personas: [analyst]
         sources: [restricted-source]
         last_verified: 2026-04-14
@@ -118,6 +120,78 @@ def test_long_quote_from_restricted_source_fails(fake_repo):
         """,
         'The report states: "This is a long quotation copied verbatim from a '
         'restricted source that exceeds the fair use word count threshold."',
+    )
+    assert check_licenses.main() == 1
+
+
+def test_unknown_parent_fails(fake_repo):
+    _write_note(
+        fake_repo,
+        "knowledge/topics/model-structures/orphan.md",
+        """
+        title: Orphan Note
+        id: orphan
+        topic_area: model-structures
+        parent: does-not-exist
+        personas: [analyst]
+        sources: [gov-source]
+        last_verified: 2026-04-14
+        status: approved
+        """,
+        "Body text.",
+    )
+    assert check_licenses.main() == 1
+
+
+def test_parent_in_different_area_fails(fake_repo):
+    _write_note(
+        fake_repo,
+        "knowledge/topics/model-structures/parent-topic.md",
+        """
+        title: Parent Topic
+        id: parent-topic
+        topic_area: model-structures
+        parent: null
+        personas: [analyst]
+        sources: [gov-source]
+        last_verified: 2026-04-14
+        status: approved
+        """,
+        "Parent body.",
+    )
+    _write_note(
+        fake_repo,
+        "knowledge/topics/surveys/child.md",
+        """
+        title: Child Note
+        id: child
+        topic_area: surveys
+        parent: parent-topic
+        personas: [analyst]
+        sources: [gov-source]
+        last_verified: 2026-04-14
+        status: approved
+        """,
+        "Child body.",
+    )
+    assert check_licenses.main() == 1
+
+
+def test_invalid_topic_area_fails(fake_repo):
+    _write_note(
+        fake_repo,
+        "knowledge/topics/model-structures/bad-area.md",
+        """
+        title: Bad Area
+        id: bad-area
+        topic_area: made-up-area
+        parent: null
+        personas: [analyst]
+        sources: [gov-source]
+        last_verified: 2026-04-14
+        status: approved
+        """,
+        "Body.",
     )
     assert check_licenses.main() == 1
 
@@ -132,12 +206,47 @@ def test_well_formed_note_passes(fake_repo):
         title: Good Note
         id: good
         topic_area: model-structures
+        parent: null
         personas: [analyst]
         sources: [gov-source]
         last_verified: 2026-04-14
         status: approved
         """,
         "Body paraphrases the government source [gov-source] without long quotes.",
+    )
+    assert check_licenses.main() == 0
+
+
+def test_parent_child_pair_passes(fake_repo):
+    _write_note(
+        fake_repo,
+        "knowledge/topics/model-structures/parent.md",
+        """
+        title: Parent
+        id: parent-id
+        topic_area: model-structures
+        parent: null
+        personas: [analyst]
+        sources: [gov-source]
+        last_verified: 2026-04-14
+        status: approved
+        """,
+        "Parent body.",
+    )
+    _write_note(
+        fake_repo,
+        "knowledge/topics/model-structures/child.md",
+        """
+        title: Child
+        id: child-id
+        topic_area: model-structures
+        parent: parent-id
+        personas: [analyst]
+        sources: [gov-source]
+        last_verified: 2026-04-14
+        status: approved
+        """,
+        "Child body.",
     )
     assert check_licenses.main() == 0
 
@@ -150,6 +259,7 @@ def test_long_quote_allowed_for_redistribute_ok_source(fake_repo):
         title: Good Note
         id: good
         topic_area: model-structures
+        parent: null
         personas: [analyst]
         sources: [open-source]
         last_verified: 2026-04-14

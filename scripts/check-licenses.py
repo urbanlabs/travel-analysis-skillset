@@ -47,10 +47,21 @@ REQUIRED_TOPIC_FIELDS = {
     "title",
     "id",
     "topic_area",
+    "parent",          # may be null; presence signals hierarchy was considered
     "personas",
     "sources",
     "last_verified",
     "status",
+}
+
+VALID_TOPIC_AREAS = {
+    "terminology",
+    "model-structures",
+    "networks",
+    "surveys",
+    "validation",
+    "forecasting",
+    "extended",
 }
 
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---\n(.*)$", re.DOTALL)
@@ -76,7 +87,12 @@ def parse_note(path: Path) -> tuple[dict, str]:
     return fm, body
 
 
-def check_note(path: Path, sources: dict, required_fields: set[str]) -> list[str]:
+def check_note(
+    path: Path,
+    sources: dict,
+    required_fields: set[str],
+    topic_index: dict[str, dict] | None = None,
+) -> list[str]:
     errors: list[str] = []
     fm, body = parse_note(path)
     if not fm:
@@ -99,6 +115,29 @@ def check_note(path: Path, sources: dict, required_fields: set[str]) -> list[str
             f"{path}: frontmatter cites unknown source IDs: {sorted(unknown)}"
         )
 
+    # topic_area must be one of the known PRD areas
+    area = fm.get("topic_area")
+    if area is not None and area not in VALID_TOPIC_AREAS:
+        errors.append(
+            f"{path}: topic_area '{area}' is not one of {sorted(VALID_TOPIC_AREAS)}"
+        )
+
+    # parent must resolve to an existing topic id in the same area (or be null)
+    if topic_index is not None and "parent" in fm:
+        parent = fm.get("parent")
+        if parent is not None:
+            if parent not in topic_index:
+                errors.append(
+                    f"{path}: parent '{parent}' does not match any topic note id"
+                )
+            else:
+                parent_area = topic_index[parent].get("topic_area")
+                if area and parent_area and parent_area != area:
+                    errors.append(
+                        f"{path}: parent '{parent}' is in topic_area "
+                        f"'{parent_area}' but this note is in '{area}'"
+                    )
+
     # Long-quote check for restrictive sources
     restrictive_cited = [
         sid for sid in cited
@@ -119,13 +158,26 @@ def check_note(path: Path, sources: dict, required_fields: set[str]) -> list[str
     return errors
 
 
+def build_topic_index(topic_files: list[Path]) -> dict[str, dict]:
+    """Build an id -> frontmatter index used to validate parent references."""
+    index: dict[str, dict] = {}
+    for p in topic_files:
+        fm, _ = parse_note(p)
+        if fm and fm.get("id"):
+            index[fm["id"]] = fm
+    return index
+
+
 def main() -> int:
     sources = load_sources()
     all_errors: list[str] = []
 
     topic_files = list(TOPICS_DIR.rglob("*.md")) if TOPICS_DIR.exists() else []
+    topic_index = build_topic_index(topic_files)
     for p in topic_files:
-        all_errors.extend(check_note(p, sources, REQUIRED_TOPIC_FIELDS))
+        all_errors.extend(
+            check_note(p, sources, REQUIRED_TOPIC_FIELDS, topic_index)
+        )
 
     disagreement_files = (
         list(DISAGREEMENTS_DIR.rglob("*.md")) if DISAGREEMENTS_DIR.exists() else []

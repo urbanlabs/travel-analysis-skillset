@@ -1,7 +1,9 @@
 ---
 title: <Topic Title>
 id: <kebab-case-id>
-topic_area: <terminology|model-structures|networks|surveys|validation|forecasting>
+topic_area: <terminology|model-structures|networks|surveys|validation|forecasting|extended>
+parent: null               # parent topic id, or null for top-level in the area
+subtopics: []              # optional list of direct-child topic ids (can be auto-generated)
 personas: [analyst, developer, researcher, reviewer]
 sources: []                # list of source IDs from knowledge/sources.yaml
 last_verified: YYYY-MM-DD
@@ -43,6 +45,14 @@ Methodological nuance, estimation considerations, literature pointers.
 
 ### For Reviewers
 Reasonableness benchmarks, red flags, validation checks.
+
+## Subtopics
+
+If this topic has child topics (listed in `subtopics` frontmatter), link to
+them here with brief descriptions. Keep the parent note short; detail lives
+in the subtopics.
+
+- [<Subtopic title>](./path/to/subtopic.md) — one-line description
 
 ## Disagreements
 
