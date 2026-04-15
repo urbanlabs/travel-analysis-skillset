@@ -161,3 +161,5 @@ Add coverage for specialized areas:
 - NCHRP Report 716: Travel Demand Forecasting: Parameters and Techniques
 - FHWA Travel Model Validation and Reasonableness Checking Manual
 - FTA New Starts guidance on travel forecasting
+- [Transportation Network Analysis by Steve Boyles et al.](https://sboyles.github.io/book.pdf)
+

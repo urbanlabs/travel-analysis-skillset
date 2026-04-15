@@ -44,7 +44,20 @@ This skill encodes knowledge independently but references these authoritative so
 
 ## Contributing
 
-See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for general guidelines. For common
+workflows, use the index below.
+
+## Workflow Index
+
+| I want to... | Read this |
+|--------------|-----------|
+| **Add or update knowledge on a topic** | [`docs/knowledge-pipeline.md`](docs/knowledge-pipeline.md) — "End-to-End Workflow" |
+| **Add a new source (paper, report, dataset)** | [`docs/LICENSE-COMPLIANCE.md`](docs/LICENSE-COMPLIANCE.md) — "Adding a New Source" |
+| **Update or regenerate the topic backlog** | [`docs/knowledge-pipeline.md`](docs/knowledge-pipeline.md) — "Workflow: Maintaining the Backlog" |
+| **See what topics are queued** | [`knowledge/BACKLOG.md`](knowledge/BACKLOG.md) |
+| **See what sources are registered** | [`knowledge/sources.yaml`](knowledge/sources.yaml) |
+| **Understand license rules for a source** | [`docs/LICENSE-COMPLIANCE.md`](docs/LICENSE-COMPLIANCE.md) |
+| **Validate my draft before review** | `python3 scripts/check-licenses.py` |
 
 ## License
 

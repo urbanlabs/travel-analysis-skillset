@@ -129,6 +129,60 @@ New personas require a PRD update first. New topic areas can be added by
 creating a new subdirectory under `knowledge/topics/` and updating
 `BACKLOG.md`.
 
+## Workflow: Maintaining the Backlog
+
+`knowledge/BACKLOG.md` is the list of topics queued for ingestion. It is NOT
+hand-written from intuition — that would make the skill's coverage reflect
+the drafter's biases rather than the field's actual structure. The backlog
+is derived from two sources, in this order:
+
+### 1. The PRD outline (authoritative)
+
+The "Skill Content Areas" table in `docs/PRD.md` defines the top-level topic
+areas (Terminology, Model Structures, Networks, Surveys, Validation,
+Forecasting) and which personas each area serves. These areas become the
+**sections** of `BACKLOG.md`. Adding a new section requires a PRD update.
+
+### 2. tfresource.org topics (enumeration)
+
+For each PRD area, enumerate candidate topics by cross-referencing
+[tfresource.org](https://tfresource.org)'s topic pages. Every topic in the
+backlog should cite at least one authoritative source — usually a
+tfresource page, an NCHRP/TCRP report, or an FHWA publication. Topics that
+have no authoritative source are either:
+
+- **Gaps** to be flagged (`source: gap` in the backlog) and turned into
+  research tasks, OR
+- **Out of scope** — drop them.
+
+### Regeneration process
+
+When you need to update or rebuild `BACKLOG.md`:
+
+1. Read the Skill Content Areas table in `docs/PRD.md` — these are your
+   top-level sections.
+2. For each area, list the tfresource topic pages that fall under it
+   (see <https://tfresource.org> navigation or its GitHub repo
+   [tfresource/tfresource-website](https://github.com/tfresource/tfresource-website)).
+3. For each candidate topic, record:
+   - Topic title (as practitioners would ask about it)
+   - Area (matches the PRD)
+   - Primary source (source id from `sources.yaml`, or a specific tfresource page)
+   - Priority (P1 = PRD Phase 1, P2 = Phase 2, P3 = Phase 3)
+   - Personas served
+4. Flag topics that have no tier-1 source as gaps.
+5. Commit the regenerated `BACKLOG.md` with a note explaining why it changed.
+
+### Adding a single topic to an existing backlog
+
+If the PRD is stable and you just need to add one topic:
+
+1. Confirm it fits an existing area; if not, stop and update the PRD first.
+2. Identify the authoritative source (tier-1 or tier-2) that warrants its inclusion.
+3. Append to the appropriate section of `BACKLOG.md` with source citation.
+4. If there is no tier-1/2 source for the topic, it does not belong in the
+   backlog — either treat it as a research task or exclude it.
+
 ## Appendix: Recommended Meta-Skills
 
 The pipeline is tool-agnostic, but drafters working in Claude Code with the
